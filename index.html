@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кибербезопасность | Хэширование SHA-256</title>
+    <style>
+        :root {
+            --primary: #6e48aa;
+            --secondary: #9d50bb;
+            --dark: #1a1a2e;
+            --light: #f1f1f1;
+            --neon: #00f0ff;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid rgba(110, 72, 170, 0.3);
+            padding-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--neon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+        }
+        
+        .year-badge {
+            background: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .card {
+            background: rgba(26, 26, 46, 0.7);
+            border: 1px solid rgba(110, 72, 170, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            color: var(--neon);
+            margin-top: 0;
+        }
+        
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 3px solid var(--secondary);
+        }
+        
+        code {
+            font-family: 'Fira Code', monospace;
+            color: var(--neon);
+        }
+        
+        .hash-result {
+            font-size: 1.2rem;
+            word-break: break-all;
+            background: rgba(0, 240, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .verification {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .verification a {
+            color: var(--neon);
+            text-decoration: none;
+            border: 1px solid var(--neon);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .verification a:hover {
+            background: var(--neon);
+            color: var(--dark);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(110, 72, 170, 0.3);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Кибербезопасность</h1>
+            <span class="year-badge">2025</span>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2>Задание по хэшированию</h2>
+                <p>Написать программу на Python, которая вычисляет хэш-значения SHA-256 для заданного текста.</p>
+                
+                <h3>Решение на Python:</h3>
+                <pre><code>import hashlib
+
+def calculate_sha256(text):
+    # Создаем объект хэша SHA-256
+    sha256_hash = hashlib.sha256()
+    
+    # Обновляем хэш с нашим текстом (предварительно кодируя в bytes)
+    sha256_hash.update(text.encode('utf-8'))
+    
+    # Получаем шестнадцатеричное представление хэша
+    return sha256_hash.hexdigest()
+
+# Вычисляем хэш для строки "test"
+text_to_hash = "test"
+hashed_value = calculate_sha256(text_to_hash)
+
+print(f"Текст: '{text_to_hash}'")
+print(f"SHA-256 хэш: {hashed_value}")</code></pre>
+                
+                <h3>Результат выполнения:</h3>
+                <div class="hash-result">
+                    Текст: 'test'<br>
+                    SHA-256 хэш: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Проверка через командную строку</h2>
+                
+                <h3>Windows:</h3>
+                <pre><code>echo|set /p="test" > %TMP%/hash.txt | certutil -hashfile %TMP%/hash.txt SHA256 | findstr /v "hash"</code></pre>
+                
+                <h3>Результат:</h3>
+                <div class="hash-result">
+                    9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+                </div>
+                
+                <h3>Linux:</h3>
+                <pre><code>echo -n test | sha256sum</code></pre>
+                
+                <h3>Результат:</h3>
+                <div class="hash-result">
+                    9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08  -
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Верификация на веб-ресурсах</h2>
+                <p>Хэш-значение можно проверить на следующих ресурсах:</p>
+                
+                <div class="verification">
+                    <a href="https://pi7.org/hash/sha256" target="_blank">pi7.org SHA-256</a>
+                    <a href="https://md5decrypt.net/en/Sha256/" target="_blank">MD5Decrypt SHA-256</a>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Выполнил: Чиркин Елизар</p>
+            <p>© 2025 Кибербезопасность | SHA-256 Хэширование</p>
+        </footer>
+    </div>
+</body>
+</html>
